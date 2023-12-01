@@ -82,8 +82,8 @@ Validation UI
 - [ ] Email should pass the `isEmailValid` function
 - [ ] City should be valid according to the `City Information` section below
   - [ ] You should have a `isCityValid` function located in `validations.ts` that returns true or false depending on the input
-- [ ] Phone number should be 7 characters long, and every characters should be a number 0-9
-  - [ ] You should have a `isPhoneValid` function located in `validations.ts` that returns true or false depending on the input
+- [x] Phone number should be 7 characters long, and every characters should be a number 0-9
+  - [x] You should have a `isPhoneValid` function located in `validations.ts` that returns true or false depending on the input
 
 Phone Number UI
 
@@ -93,7 +93,7 @@ Phone Number UI
 
 Phone Input
 
-- [ ] Create a `FunctionalPhoneInput` component to clean up code
+- [x] Create a `FunctionalPhoneInput` component to clean up code
 - [ ] Create a `ClassPhoneInput` component to clean up code
 - [ ] The telephone input should work EXACTLY like on the example site
 - [ ] Typing in the max characters on one input should move to the next input
@@ -109,7 +109,7 @@ City Information
 
 Text Inputs
 
-- [ ] Create a `FunctionalTextInput` component that groups the label and the input together
+- [x] Create a `FunctionalTextInput` component that groups the label and the input together
 - [ ] Create a `ClassTextInput` component to clean up code
 
 Form

@@ -1,4 +1,13 @@
+import { useState } from "react";
 import { ErrorMessage } from "../ErrorMessage";
+import { FunctionalTextInput } from "./FunctionalTextInput";
+import { FunctionalPhoneInput, PhoneInputState } from "./FunctionalPhoneInput";
+import {
+	isCityValid,
+	isEmailValid,
+	isInputValid,
+	isPhoneValid,
+} from "../utils/validations";
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -7,56 +16,120 @@ const cityErrorMessage = "State is Invalid";
 const phoneNumberErrorMessage = "Invalid Phone Number";
 
 export const FunctionalForm = () => {
-  return (
-    <form>
-      <u>
-        <h3>User Information Form</h3>
-      </u>
+	const [firstNameInput, setFirstNameInput] = useState("");
+	const [lastNameInput, setLastNameInput] = useState("");
+	const [emailInput, setEmailInput] = useState("");
+	const [cityInput, setCityInput] = useState("");
+	const [phoneInput, setPhoneInput] = useState<PhoneInputState>([
+		"",
+		"",
+		"",
+		"",
+	]);
+	const [isSubmitted, setIsSubmitted] = useState(false);
 
-      {/* first name input */}
-      <div className="input-wrap">
-        <label>{"First Name"}:</label>
-        <input placeholder="Bilbo" />
-      </div>
-      <ErrorMessage message={firstNameErrorMessage} show={true} />
+	const shouldShowPhoneError = isSubmitted && isPhoneValid(phoneInput);
 
-      {/* last name input */}
-      <div className="input-wrap">
-        <label>{"Last Name"}:</label>
-        <input placeholder="Baggins" />
-      </div>
-      <ErrorMessage message={lastNameErrorMessage} show={true} />
+	const shouldShowInputError =
+		isSubmitted && isInputValid(firstNameInput || lastNameInput);
 
-      {/* Email Input */}
-      <div className="input-wrap">
-        <label>{"Email"}:</label>
-        <input placeholder="bilbo-baggins@adventurehobbits.net" />
-      </div>
-      <ErrorMessage message={emailErrorMessage} show={true} />
+	const shouldShowCityError = isSubmitted && isCityValid(cityInput);
 
-      {/* City Input */}
-      <div className="input-wrap">
-        <label>{"City"}:</label>
-        <input placeholder="Hobbiton" />
-      </div>
-      <ErrorMessage message={cityErrorMessage} show={true} />
+	const shouldShowEmailError = isSubmitted && isEmailValid(emailInput);
 
-      <div className="input-wrap">
-        <label htmlFor="phone">Phone:</label>
-        <div id="phone-input-wrap">
-          <input type="text" id="phone-input-1" placeholder="55" />
-          -
-          <input type="text" id="phone-input-2" placeholder="55" />
-          -
-          <input type="text" id="phone-input-3" placeholder="55" />
-          -
-          <input type="text" id="phone-input-4" placeholder="5" />
-        </div>
-      </div>
+	return (
+		<form
+			onSubmit={(e) => {
+				e.preventDefault();
+				setIsSubmitted(true);
+			}}
+		>
+			<u>
+				<h3>User Information Form</h3>
+			</u>
 
-      <ErrorMessage message={phoneNumberErrorMessage} show={true} />
+			{/* first name input */}
+			<FunctionalTextInput
+				label={"First Name"}
+				inputProps={{
+					onChange: (e) => {
+						setFirstNameInput(e.target.value);
+					},
+					value: firstNameInput,
+					placeholder: "Bilbo",
+				}}
+			/>
 
-      <input type="submit" value="Submit" />
-    </form>
-  );
+			<ErrorMessage
+				message={firstNameErrorMessage}
+				show={shouldShowInputError}
+			/>
+
+			{/* last name input */}
+			<FunctionalTextInput
+				label={"Last Name"}
+				inputProps={{
+					onChange: (e) => {
+						setLastNameInput(e.target.value);
+					},
+					value: lastNameInput,
+					placeholder: "Baggins",
+				}}
+			/>
+
+			<ErrorMessage
+				message={lastNameErrorMessage}
+				show={shouldShowInputError}
+			/>
+
+			{/* Email Input */}
+			<FunctionalTextInput
+				label={"Email"}
+				inputProps={{
+					onChange: (e) => {
+						setEmailInput(e.target.value);
+					},
+					value: emailInput,
+					placeholder: "bilbo-baggins@adventurehobbits.net",
+				}}
+			/>
+
+			<ErrorMessage
+				message={emailErrorMessage}
+				show={shouldShowEmailError}
+			/>
+
+			{/* City Input */}
+			<FunctionalTextInput
+				label={"City"}
+				inputProps={{
+					onChange: (e) => {
+						setCityInput(e.target.value);
+					},
+					value: cityInput,
+					placeholder: "Hobbiton",
+					list: "cities",
+				}}
+			/>
+
+			<ErrorMessage
+				message={cityErrorMessage}
+				show={shouldShowCityError}
+			/>
+			{/* Phone Input */}
+			<FunctionalPhoneInput
+				phoneInputState={phoneInput}
+				setPhoneInputState={setPhoneInput}
+			/>
+			<ErrorMessage
+				message={phoneNumberErrorMessage}
+				show={shouldShowPhoneError}
+			/>
+
+			<input
+				type="submit"
+				value="Submit"
+			/>
+		</form>
+	);
 };
