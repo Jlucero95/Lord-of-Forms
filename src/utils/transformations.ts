@@ -1,9 +1,16 @@
-export const capitalize = () => {
-    // todo: build this function
-    // `capitalize("jOn")` should output `"Jon"`
+export const capitalize = (input: string) => {
+    const splitStr = input.split("");
+    const [firstLetter, ...rest] =splitStr
+    const capitalizeFirstLetter = firstLetter.toUpperCase();
+    const lowerCaseRestOfWord = rest.map((char) => {
+        return char.toLowerCase()
+    })
+    const capitalizedWord = capitalizeFirstLetter +lowerCaseRestOfWord.join("")
+    return capitalizedWord
 }
 
-export const formatPhoneNumber = () => {
-    // todo: build this function
-    // `formatPhoneNumber("1234567")` should be `"12-34-56-7"`
+export const formatPhoneNumber = (input: string) => {
+    const regex = /\d{2}/g;
+    const formattedNumber = input.replace(regex, "$&-");
+    return formattedNumber
 }

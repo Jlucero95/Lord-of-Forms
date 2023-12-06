@@ -8,7 +8,7 @@ import {
 	isInputValid,
 	isPhoneValid,
 } from "../utils/validations";
-import { PhoneInputState } from "../types";
+import { PhoneInputState, UserInformation } from "../types";
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -16,7 +16,11 @@ const emailErrorMessage = "Email is Invalid";
 const cityErrorMessage = "State is Invalid";
 const phoneNumberErrorMessage = "Invalid Phone Number";
 
-export const FunctionalForm = () => {
+export const FunctionalForm = ({
+	handleUserInformation,
+}: {
+	handleUserInformation: (userInformation: UserInformation) => void;
+}) => {
 	const [firstNameInput, setFirstNameInput] = useState("");
 	const [lastNameInput, setLastNameInput] = useState("");
 	const [emailInput, setEmailInput] = useState("");
@@ -29,33 +33,37 @@ export const FunctionalForm = () => {
 	]);
 	const [isSubmitted, setIsSubmitted] = useState(false);
 
-	const shouldShowInputError = (input: string) => {
-		return isSubmitted && isInputValid(input);
+	const shouldShowNameInputError = (input: string) => {
+		return isSubmitted && !isInputValid(input);
 	};
-	const shouldShowEmailError = isSubmitted && isEmailValid(emailInput);
+	const shouldShowEmailError = isSubmitted && !isEmailValid(emailInput);
 
-	const shouldShowCityError = isSubmitted && isCityValid(cityInput);
+	const shouldShowCityError = isSubmitted && !isCityValid(cityInput);
 
-	const shouldShowPhoneError = isSubmitted && isPhoneValid(phoneInput);
+	const shouldShowPhoneError = isSubmitted && !isPhoneValid(phoneInput);
 
-	const areAllInputsValid = () => {
-		return !shouldShowInputError ||
-			!shouldShowEmailError ||
-			!shouldShowCityError ||
+	const shouldSetUserInformation = () => {
+		setIsSubmitted(true);
+		if (
+			!shouldShowNameInputError(firstNameInput) &&
+			!shouldShowNameInputError(lastNameInput) &&
+			!shouldShowEmailError &&
+			!shouldShowCityError &&
 			!shouldShowPhoneError
-			? true
-			: false;
-	};
-	const showAlertMessage = () => {
-		if (!areAllInputsValid()) {
-			alert("Bad data input");
-		} else {
+		) {
+			handleUserInformation({
+				firstName: firstNameInput,
+				lastName: lastNameInput,
+				email: emailInput,
+				city: cityInput,
+				phone: phoneInput.join(""),
+			});
 			setFirstNameInput(""),
 				setLastNameInput(""),
 				setEmailInput(""),
 				setCityInput(""),
-				setPhoneInput(["", "", "", ""]);
-			setIsSubmitted(false);
+				setPhoneInput(["", "", "", ""]),
+				setIsSubmitted(false);
 		}
 	};
 
@@ -63,8 +71,7 @@ export const FunctionalForm = () => {
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				showAlertMessage();
-				setIsSubmitted(true);
+				shouldSetUserInformation();
 			}}
 		>
 			<u>
@@ -85,7 +92,7 @@ export const FunctionalForm = () => {
 
 			<ErrorMessage
 				message={firstNameErrorMessage}
-				show={shouldShowInputError(firstNameInput)}
+				show={shouldShowNameInputError(firstNameInput)}
 			/>
 
 			{/* last name input */}
@@ -102,7 +109,7 @@ export const FunctionalForm = () => {
 
 			<ErrorMessage
 				message={lastNameErrorMessage}
-				show={shouldShowInputError(lastNameInput)}
+				show={shouldShowNameInputError(lastNameInput)}
 			/>
 
 			{/* Email Input */}

@@ -1,12 +1,20 @@
+import { useState } from "react";
 import { ProfileInformation } from "../ProfileInformation";
 import { FunctionalForm } from "./FunctionalForm";
+import { UserInformation } from "../types";
 
 export const FunctionalApp = () => {
-  return (
-    <>
-      <h2>Functional</h2>
-      <ProfileInformation userData={null} />
-      <FunctionalForm />
-    </>
-  );
+	const [userInformation, setUserInformation] =
+		useState<UserInformation | null>(null);
+	return (
+		<>
+			<h2>Functional</h2>
+			<ProfileInformation userData={userInformation} />
+			<FunctionalForm
+				handleUserInformation={(userInformation) => {
+					setUserInformation(userInformation);
+				}}
+			/>
+		</>
+	);
 };

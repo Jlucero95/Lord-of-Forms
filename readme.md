@@ -74,7 +74,7 @@ My recommendation is read through all the requirements once, then focus more on 
 Validation UI
 
 - [ ] Under input errors should not show UNLESS the user has already tried submitting once
-- [ ] Errors should go away as soon as the field is fixed, not on submit
+- [x] Errors should go away as soon as the field is fixed, not on submit
 - [x] If a user tries to submit a form with bad inputs, an alert message will say "Bad Inputs" then the exact errors will pop up under the incorrect inputs
 - [ ] When a user successfully submits the form, it should update the userInformation and show the user information in the ProfileInformation Component
 - [x] First Name should be at least 2 characters long and should not contain numbers
@@ -103,9 +103,9 @@ Phone Input
 
 City Information
 
-- [ ] A valid city should be in the list of `allCites` found in `all-cities.ts`
-- [ ] A valid city does NOT have to be the same casing,"Hobbiton" or "hobbiton" should pass validation
-- [ ] Make a `isValidCity` function that checks to see if an input is a valid city
+- [x] A valid city should be in the list of `allCites` found in `all-cities.ts`
+- [x] A valid city does NOT have to be the same casing,"Hobbiton" or "hobbiton" should pass validation
+- [x] Make a `isValidCity` function that checks to see if an input is a valid city
 
 Text Inputs
 
@@ -114,7 +114,7 @@ Text Inputs
 
 Form
 
-- [ ] Page must NOT reload after submitting
+- [x] Page must NOT reload after submitting
 - [ ] ClassApp Code and FunctionalApp Code should be treated as separate apps as far as state goes
 
 Profile Information Component
