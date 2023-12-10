@@ -31,7 +31,7 @@ export const ProfileInformation = ({
 	if (!userData) {
 		return <>{noInformationProvided}</>;
 	}
-	const { email, firstName, lastName, phone, city } = userData;
+	const { firstName, lastName, email, phone, city } = userData;
 	const newPhoneFormat = formatPhoneNumber(phone);
 
 	if (
