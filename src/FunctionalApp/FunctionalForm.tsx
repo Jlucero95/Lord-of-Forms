@@ -42,28 +42,31 @@ export const FunctionalForm = ({
 
 	const shouldShowPhoneError = isSubmitted && !isPhoneValid(phoneInput);
 
-	const shouldSetUserInformation = () => {
-		setIsSubmitted(true);
-		if (
-			!shouldShowNameInputError(firstNameInput) &&
-			!shouldShowNameInputError(lastNameInput) &&
-			!shouldShowEmailError &&
-			!shouldShowCityError &&
-			!shouldShowPhoneError
-		) {
-			handleUserInformation({
-				firstName: firstNameInput,
-				lastName: lastNameInput,
-				email: emailInput,
-				city: cityInput,
-				phone: phoneInput.join(""),
-			});
+	const isAllUserInformationValid =
+		isInputValid(firstNameInput) &&
+		isInputValid(lastNameInput) &&
+		isEmailValid(emailInput) &&
+		isCityValid(cityInput) &&
+		isPhoneValid(phoneInput) &&
+		isSubmitted;
+
+	const shouldAlert = () => {
+		if (!isAllUserInformationValid) {
+			alert("bad data input");
+		} else {
 			setFirstNameInput(""),
 				setLastNameInput(""),
 				setEmailInput(""),
 				setCityInput(""),
 				setPhoneInput(["", "", "", ""]),
-				setIsSubmitted(false);
+				setIsSubmitted(false),
+				handleUserInformation({
+					firstName: firstNameInput,
+					lastName: lastNameInput,
+					email: emailInput,
+					city: cityInput,
+					phone: phoneInput.join(""),
+				});
 		}
 	};
 
@@ -71,7 +74,8 @@ export const FunctionalForm = ({
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				shouldSetUserInformation();
+				setIsSubmitted(true);
+				shouldAlert();
 			}}
 		>
 			<u>
