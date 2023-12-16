@@ -1,9 +1,4 @@
-import { ComponentProps } from "react";
-
-type TextInput = {
-	label: string;
-	inputProps: ComponentProps<"input">;
-};
+import { TextInput } from "../types";
 
 export const FunctionalTextInput = ({ label, inputProps }: TextInput) => {
 	return (

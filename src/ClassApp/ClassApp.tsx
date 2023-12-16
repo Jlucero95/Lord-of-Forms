@@ -4,28 +4,21 @@ import { UserInformation } from "../types";
 import { ProfileInformation } from "../ProfileInformation";
 type State = { userInformation: UserInformation | null };
 
-const defaultUser: UserInformation = {
-  email: "default@default.com",
-  firstName: "Default",
-  lastName: "Default",
-  phone: "1234567",
-  city: "Hobbiton",
-};
-
-export class ClassApp extends Component<Record<string, never>, State> {
-  render() {
-    return (
-      <>
-        <h2>Class</h2>
-        <ProfileInformation
-          userData={
-            // toggle the following lines to change
-            // null
-            defaultUser
-          }
-        />
-        <ClassForm />
-      </>
-    );
-  }
+export class ClassApp extends Component {
+	state: State = {
+		userInformation: null,
+	};
+	render() {
+		return (
+			<>
+				<h2>Class</h2>
+				<ProfileInformation userData={this.state.userInformation} />
+				<ClassForm
+					handleUserInformation={(userInformation) => {
+						this.setState({ userInformation: userInformation });
+					}}
+				/>
+			</>
+		);
+	}
 }

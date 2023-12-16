@@ -1,5 +1,14 @@
 import { Component } from "react";
 import { ErrorMessage } from "../ErrorMessage";
+import { ClassPhoneInput } from "./ClassPhoneInput";
+import { ClassTextInput } from "./ClassTextInput";
+import {
+	isCityValid,
+	isEmailValid,
+	isInputValid,
+	isPhoneValid,
+} from "../utils/validations";
+import { UserInformation } from "../types";
 
 const firstNameErrorMessage = "First name must be at least 2 characters long";
 const lastNameErrorMessage = "Last name must be at least 2 characters long";
@@ -7,59 +16,175 @@ const emailErrorMessage = "Email is Invalid";
 const cityErrorMessage = "State is Invalid";
 const phoneNumberErrorMessage = "Invalid Phone Number";
 
-export class ClassForm extends Component {
-  render() {
-    return (
-      <form>
-        <u>
-          <h3>User Information Form</h3>
-        </u>
+export class ClassForm extends Component<{
+	handleUserInformation: (userInformation: UserInformation) => void;
+}> {
+	state = {
+		firstNameInput: "",
+		lastNameInput: "",
+		emailInput: "",
+		cityInput: "",
+		phoneInput: ["", "", "", ""],
+		isSubmitted: false,
+	};
 
-        {/* first name input */}
-        <div className="input-wrap">
-          <label>{"First Name"}:</label>
-          <input placeholder="Bilbo" />
-        </div>
-        <ErrorMessage message={firstNameErrorMessage} show={true} />
+	handlePhoneInputChange = (index: number) => (value: string) => {
+		this.setState(() => {
+			const newPhoneInput = [...this.state.phoneInput];
+			newPhoneInput[index] = value;
+			return { phoneInput: newPhoneInput };
+		});
+	};
+	render() {
+		const {
+			firstNameInput,
+			lastNameInput,
+			emailInput,
+			cityInput,
+			phoneInput,
+			isSubmitted,
+		} = this.state;
+		const shouldShowNameInputError = (input: string) => {
+			return isSubmitted && !isInputValid(input);
+		};
+		const shouldShowEmailError = isSubmitted && !isEmailValid(emailInput);
 
-        {/* last name input */}
-        <div className="input-wrap">
-          <label>{"Last Name"}:</label>
-          <input placeholder="Baggins" />
-        </div>
-        <ErrorMessage message={lastNameErrorMessage} show={true} />
+		const shouldShowCityError = isSubmitted && !isCityValid(cityInput);
 
-        {/* Email Input */}
-        <div className="input-wrap">
-          <label>{"Email"}:</label>
-          <input placeholder="bilbo-baggins@adventurehobbits.net" />
-        </div>
-        <ErrorMessage message={emailErrorMessage} show={true} />
+		const shouldShowPhoneError = isSubmitted && !isPhoneValid(phoneInput);
 
-        {/* City Input */}
-        <div className="input-wrap">
-          <label>{"City"}:</label>
-          <input placeholder="Hobbiton" />
-        </div>
-        <ErrorMessage message={cityErrorMessage} show={true} />
+		const isAllUserInformationValid =
+			isInputValid(firstNameInput) &&
+			isInputValid(lastNameInput) &&
+			isEmailValid(emailInput) &&
+			isCityValid(cityInput) &&
+			isPhoneValid(phoneInput) &&
+			isSubmitted;
 
-        <div className="input-wrap">
-          <label htmlFor="phone">Phone:</label>
-          <div id="phone-input-wrap">
-            <input type="text" id="phone-input-1" placeholder="55" />
-            -
-            <input type="text" id="phone-input-2" placeholder="55" />
-            -
-            <input type="text" id="phone-input-3" placeholder="55" />
-            -
-            <input type="text" id="phone-input-4" placeholder="5" />
-          </div>
-        </div>
+		const shouldAlert = () => {
+			if (!isAllUserInformationValid) {
+				alert("bad data input");
+			} else {
+				this.setState({
+					firstNameInput: "",
+					lastNameInput: "",
+					emailInput: "",
+					cityInput: "",
+					phoneInput: ["", "", "", ""],
+					isSubmitted: false,
+				});
+				this.props.handleUserInformation({
+					firstName: firstNameInput,
+					lastName: lastNameInput,
+					email: emailInput,
+					city: cityInput,
+					phone: phoneInput.join(""),
+				});
+			}
+		};
 
-        <ErrorMessage message={phoneNumberErrorMessage} show={true} />
+		return (
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					this.setState({ isSubmitted: true });
+					shouldAlert();
+				}}
+			>
+				<u>
+					<h3>User Information Form</h3>
+				</u>
 
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
+				{/* first name input */}
+				<ClassTextInput
+					label="First Name"
+					inputProps={{
+						onChange: (e) => {
+							this.setState({ firstNameInput: e.target.value });
+						},
+						value: firstNameInput,
+						placeholder: "Bilbo",
+					}}
+				/>
+
+				<ErrorMessage
+					message={firstNameErrorMessage}
+					show={shouldShowNameInputError(firstNameInput)}
+				/>
+
+				{/* last name input */}
+				<ClassTextInput
+					label="Last Name"
+					inputProps={{
+						onChange: (e) => {
+							this.setState({ lastNameInput: e.target.value });
+						},
+						value: lastNameInput,
+						placeholder: "Baggins",
+					}}
+				/>
+
+				<ErrorMessage
+					message={lastNameErrorMessage}
+					show={shouldShowNameInputError(lastNameInput)}
+				/>
+
+				{/* Email Input */}
+				<ClassTextInput
+					label="Email"
+					inputProps={{
+						onChange: (e) => {
+							this.setState({ emailInput: e.target.value });
+						},
+						value: emailInput,
+						placeholder: "bilbo-baggins@adventurehobbits.net",
+					}}
+				/>
+
+				<ErrorMessage
+					message={emailErrorMessage}
+					show={shouldShowEmailError}
+				/>
+
+				{/* City Input */}
+				<ClassTextInput
+					label="City"
+					inputProps={{
+						onChange: (e) => {
+							this.setState({ cityInput: e.target.value });
+						},
+						value: cityInput,
+						placeholder: "Hobbiton",
+						list: "cities",
+					}}
+				/>
+
+				<ErrorMessage
+					message={cityErrorMessage}
+					show={shouldShowCityError}
+				/>
+				{/* Phone Input */}
+
+				<ClassPhoneInput
+					phoneInputState={[
+						phoneInput[0],
+						phoneInput[1],
+						phoneInput[2],
+						phoneInput[3],
+					]}
+					setPhoneInputState={this.handlePhoneInputChange}
+				/>
+
+				<ErrorMessage
+					message={phoneNumberErrorMessage}
+					show={shouldShowPhoneError}
+				/>
+
+				<input
+					type="submit"
+					value="Submit"
+				/>
+			</form>
+		);
+	}
 }
