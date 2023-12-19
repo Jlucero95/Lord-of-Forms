@@ -15,7 +15,8 @@ export function isPhoneValid(input: string[]) {
 }
 
 export function isInputValid(input:string) {
-	const checkInputLength = input.length > 1;
+	const checkForNumbers = /[0-9]/
+	const checkInputLength = input.length > 1 && !checkForNumbers.test(input);
 	return checkInputLength
 }
 

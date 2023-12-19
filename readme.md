@@ -54,14 +54,14 @@ To get this project setup, you should:
 
 ## Typescript Specific Requirements
 
-- [ ] pass **ALL** type-checks
+- [x] pass **ALL** type-checks
   - Check by running `npm run typecheck`
-- [ ] DON'T USE `any`.... OR ELSE
-- [ ] Keep your types clean and in a logical location
-- [ ] Prop Types for components should be collocated with their components
-- [ ] Shared types should live in a file that says `types` somewhere in it's name
-  - [ ] example: `types.ts` should work fine
-- [ ] Unshared types should live in the component they are used in
+- [x] DON'T USE `any`.... OR ELSE
+- [x] Keep your types clean and in a logical location
+- [x] Prop Types for components should be collocated with their components
+- [x] Shared types should live in a file that says `types` somewhere in it's name
+  - [x] example: `types.ts` should work fine
+- [x] Unshared types should live in the component they are used in
 
 ## Assignment Specific Requirements
 
@@ -69,14 +69,14 @@ Example Template:
 
 My recommendation is read through all the requirements once, then focus more on matching 👇 that UI. Then at the end use the checklist to make sure that you covered all of the UI and requirements, this checklist should make more sense as you start coding.
 
-- [ ] Get your code to function EXACTLY like [This Site](https://lord-of-the-forms.vercel.app/)
+- [x] Get your code to function EXACTLY like [This Site](https://lord-of-the-forms.vercel.app/)
 
 Validation UI
 
-- [ ] Under input errors should not show UNLESS the user has already tried submitting once
+- [x] Under input errors should not show UNLESS the user has already tried submitting once
 - [x] Errors should go away as soon as the field is fixed, not on submit
 - [x] If a user tries to submit a form with bad inputs, an alert message will say "Bad Inputs" then the exact errors will pop up under the incorrect inputs
-- [ ] When a user successfully submits the form, it should update the userInformation and show the user information in the ProfileInformation Component
+- [x] When a user successfully submits the form, it should update the userInformation and show the user information in the ProfileInformation Component
 - [x] First Name should be at least 2 characters long and should not contain numbers
 - [x] Last Name should be at least 2 characters long and should not contain numbers
 - [x] Email should pass the `isEmailValid` function

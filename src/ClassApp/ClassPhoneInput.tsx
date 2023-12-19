@@ -1,16 +1,16 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, createRef } from "react";
 import { Component } from "react";
 import { PhoneInputState } from "../types";
 
 export class ClassPhoneInput extends Component<{
-	phoneInputState: PhoneInputState;
-	setPhoneInputState: (index: number) => (value: string) => void;
+	phoneInputProps: PhoneInputState;
+	setPhoneInputState: Dispatch<SetStateAction<PhoneInputState>>;
 }> {
 	refList = [
-		React.createRef<HTMLInputElement>(),
-		React.createRef<HTMLInputElement>(),
-		React.createRef<HTMLInputElement>(),
-		React.createRef<HTMLInputElement>(),
+		createRef<HTMLInputElement>(),
+		createRef<HTMLInputElement>(),
+		createRef<HTMLInputElement>(),
+		createRef<HTMLInputElement>(),
 	];
 
 	createOnChangeHandler =
@@ -28,6 +28,11 @@ export class ClassPhoneInput extends Component<{
 
 			const shouldGoToPrevRef = value.length === 0 && prevRef?.current;
 
+			const newState = this.props.phoneInputProps.map(
+				(phoneInput: string, phoneInputIndex: number) =>
+					index === phoneInputIndex ? e.target.value : phoneInput
+			) as PhoneInputState;
+
 			if (shouldGoToNextRef) {
 				nextRef.current?.focus();
 			}
@@ -41,12 +46,13 @@ export class ClassPhoneInput extends Component<{
 				!value.includes(" ") &&
 				value.length <= currentMaxLength
 			) {
-				this.props.setPhoneInputState(index)(value);
+				this.props.setPhoneInputState(newState as PhoneInputState);
 			}
 		};
 
 	render() {
-		const { phoneInputState } = this.props;
+		const { phoneInputProps } = this.props;
+
 		return (
 			<div className="input-wrap">
 				<label htmlFor="phone">Phone:</label>
@@ -57,7 +63,7 @@ export class ClassPhoneInput extends Component<{
 						placeholder="55"
 						ref={this.refList[0]}
 						onChange={this.createOnChangeHandler(0)}
-						value={phoneInputState[0]}
+						value={phoneInputProps[0]}
 					/>
 					-
 					<input
@@ -66,7 +72,7 @@ export class ClassPhoneInput extends Component<{
 						placeholder="55"
 						ref={this.refList[1]}
 						onChange={this.createOnChangeHandler(1)}
-						value={phoneInputState[1]}
+						value={phoneInputProps[1]}
 					/>
 					-
 					<input
@@ -75,7 +81,7 @@ export class ClassPhoneInput extends Component<{
 						placeholder="55"
 						ref={this.refList[2]}
 						onChange={this.createOnChangeHandler(2)}
-						value={phoneInputState[2]}
+						value={phoneInputProps[2]}
 					/>
 					-
 					<input
@@ -85,7 +91,7 @@ export class ClassPhoneInput extends Component<{
 						maxLength={1}
 						ref={this.refList[3]}
 						onChange={this.createOnChangeHandler(3)}
-						value={phoneInputState[3]}
+						value={phoneInputProps[3]}
 					/>
 				</div>
 			</div>

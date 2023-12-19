@@ -9,12 +9,13 @@ import {
 	isPhoneValid,
 } from "../utils/validations";
 import { PhoneInputState, UserInformation } from "../types";
-
-const firstNameErrorMessage = "First name must be at least 2 characters long";
-const lastNameErrorMessage = "Last name must be at least 2 characters long";
-const emailErrorMessage = "Email is Invalid";
-const cityErrorMessage = "State is Invalid";
-const phoneNumberErrorMessage = "Invalid Phone Number";
+import {
+	cityErrorMessage,
+	emailErrorMessage,
+	firstNameErrorMessage,
+	lastNameErrorMessage,
+	phoneNumberErrorMessage,
+} from "../utils/InputErrorMessages";
 
 export const FunctionalForm = ({
 	handleUserInformation,
@@ -50,7 +51,7 @@ export const FunctionalForm = ({
 		isPhoneValid(phoneInput) &&
 		isSubmitted;
 
-	const shouldAlert = () => {
+	const shouldAlertOrReset = () => {
 		if (!isAllUserInformationValid) {
 			alert("bad data input");
 		} else {
@@ -75,7 +76,7 @@ export const FunctionalForm = ({
 			onSubmit={(e) => {
 				e.preventDefault();
 				setIsSubmitted(true);
-				shouldAlert();
+				shouldAlertOrReset();
 			}}
 		>
 			<u>

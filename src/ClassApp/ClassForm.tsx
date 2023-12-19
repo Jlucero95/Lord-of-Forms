@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { PhoneInputState, UserInformation } from "../types";
 import { ErrorMessage } from "../ErrorMessage";
 import { ClassPhoneInput } from "./ClassPhoneInput";
 import { ClassTextInput } from "./ClassTextInput";
@@ -8,13 +9,13 @@ import {
 	isInputValid,
 	isPhoneValid,
 } from "../utils/validations";
-import { UserInformation } from "../types";
-
-const firstNameErrorMessage = "First name must be at least 2 characters long";
-const lastNameErrorMessage = "Last name must be at least 2 characters long";
-const emailErrorMessage = "Email is Invalid";
-const cityErrorMessage = "State is Invalid";
-const phoneNumberErrorMessage = "Invalid Phone Number";
+import {
+	cityErrorMessage,
+	emailErrorMessage,
+	firstNameErrorMessage,
+	lastNameErrorMessage,
+	phoneNumberErrorMessage,
+} from "../utils/InputErrorMessages";
 
 export class ClassForm extends Component<{
 	handleUserInformation: (userInformation: UserInformation) => void;
@@ -28,13 +29,6 @@ export class ClassForm extends Component<{
 		isSubmitted: false,
 	};
 
-	handlePhoneInputChange = (index: number) => (value: string) => {
-		this.setState(() => {
-			const newPhoneInput = [...this.state.phoneInput];
-			newPhoneInput[index] = value;
-			return { phoneInput: newPhoneInput };
-		});
-	};
 	render() {
 		const {
 			firstNameInput,
@@ -61,7 +55,7 @@ export class ClassForm extends Component<{
 			isPhoneValid(phoneInput) &&
 			isSubmitted;
 
-		const shouldAlert = () => {
+		const shouldAlertOrReset = () => {
 			if (!isAllUserInformationValid) {
 				alert("bad data input");
 			} else {
@@ -88,7 +82,7 @@ export class ClassForm extends Component<{
 				onSubmit={(e) => {
 					e.preventDefault();
 					this.setState({ isSubmitted: true });
-					shouldAlert();
+					shouldAlertOrReset();
 				}}
 			>
 				<u>
@@ -166,13 +160,10 @@ export class ClassForm extends Component<{
 				{/* Phone Input */}
 
 				<ClassPhoneInput
-					phoneInputState={[
-						phoneInput[0],
-						phoneInput[1],
-						phoneInput[2],
-						phoneInput[3],
-					]}
-					setPhoneInputState={this.handlePhoneInputChange}
+					phoneInputProps={phoneInput as PhoneInputState}
+					setPhoneInputState={(phoneInput) => {
+						this.setState({ phoneInput: phoneInput });
+					}}
 				/>
 
 				<ErrorMessage
