@@ -1,7 +1,7 @@
 import { isInputValid } from "./validations";
 
 export const capitalize = (input: string) => {
-
+	
 	if (isInputValid(input)) {
 		const splitStr = input.split("");
 		const [firstLetter, ...rest] = splitStr;

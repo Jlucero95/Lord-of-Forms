@@ -45,12 +45,12 @@ To get this project setup, you should:
 
 - To check if linting passes, run `npm run lint`
 
-- [ ] Format code with prettier
-- [ ] State should not be duplicated
-- [ ] Variables should be named logically
-- [ ] No unnecessary console logs
-- [ ] No commented out blocks of code (Code comments are fine)
-- [ ] Setup a github repository with your submission as the `main` branch, you will submit a link to this for grading (NOT A ZIP FILE)
+- [x] Format code with prettier
+- [x] State should not be duplicated
+- [x] Variables should be named logically
+- [x] No unnecessary console logs
+- [x] No commented out blocks of code (Code comments are fine)
+- [x] Setup a github repository with your submission as the `main` branch, you will submit a link to this for grading (NOT A ZIP FILE)
 
 ## Typescript Specific Requirements
 
@@ -87,19 +87,19 @@ Validation UI
 
 Phone Number UI
 
-- [ ] When you store a phone number in state it should NOT have all the `-` characters in what you are storing
-- [ ] Display a phone number with the format `NN-NN-NN-N`
+- [x] When you store a phone number in state it should NOT have all the `-` characters in what you are storing
+- [x] Display a phone number with the format `NN-NN-NN-N`
   - use this function in your `ProfileInformation` component to render the correct thing to the screen
 
 Phone Input
 
 - [x] Create a `FunctionalPhoneInput` component to clean up code
-- [ ] Create a `ClassPhoneInput` component to clean up code
-- [ ] The telephone input should work EXACTLY like on the example site
-- [ ] Typing in the max characters on one input should move to the next input
-- [ ] Deleting should go to the previous input as necessary
-- [ ] Inputs should be tracked with a state that looks like this ["", "", "", ""]
-- [ ] A User cannot type any non-numeric characters into a telephone input
+- [x] Create a `ClassPhoneInput` component to clean up code
+- [x] The telephone input should work EXACTLY like on the example site
+- [x] Typing in the max characters on one input should move to the next input
+- [x] Deleting should go to the previous input as necessary
+- [x] Inputs should be tracked with a state that looks like this ["", "", "", ""]
+- [x] A User cannot type any non-numeric characters into a telephone input
 
 City Information
 
@@ -110,20 +110,20 @@ City Information
 Text Inputs
 
 - [x] Create a `FunctionalTextInput` component that groups the label and the input together
-- [ ] Create a `ClassTextInput` component to clean up code
+- [x] Create a `ClassTextInput` component to clean up code
 
 Form
 
 - [x] Page must NOT reload after submitting
-- [ ] ClassApp Code and FunctionalApp Code should be treated as separate apps as far as state goes
+- [x] ClassApp Code and FunctionalApp Code should be treated as separate apps as far as state goes
 
 Profile Information Component
 
 - You can share this between the `FunctionalApp` and the `ClassApp`
 - build a `capitalize` function in `transformations.ts` to correctly display a first and last name
 
-- [ ] build a `formatPhone` function in `transformations.ts` that will turn "1234567" into "12-34-56-7"
-- [ ] use `capitalize` and `formatPHone` in the `ProfileInformation` component in order to format things appropriately
+- [x] build a `formatPhone` function in `transformations.ts` that will turn "1234567" into "12-34-56-7"
+- [x] use `capitalize` and `formatPHone` in the `ProfileInformation` component in order to format things appropriately
 
 Email Validations
 
